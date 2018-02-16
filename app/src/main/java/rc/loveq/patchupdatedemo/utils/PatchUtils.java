@@ -6,6 +6,11 @@ package rc.loveq.patchupdatedemo.utils;
  */
 
 public class PatchUtils {
+
+    static {
+        System.loadLibrary("bspatch");
+    }
+
     /**
      * @param oldApkPath 原来的本地安装的apk路径
      * @param newApkPath 与查分包合并后新的apk路径

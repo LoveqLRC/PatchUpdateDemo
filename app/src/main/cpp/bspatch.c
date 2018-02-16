@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:
 #include <err.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include "rc_loveq_patchupdatedemo_utils_PatchUtils.h"
 
 static off_t offtin(u_char *buf)
 {
@@ -61,7 +62,7 @@ static off_t offtin(u_char *buf)
 	return y;
 }
 
-int main(int argc,char * argv[])
+int patch(int argc,char * argv[])
 {
 	FILE * f, * cpf, * dpf, * epf;
 	BZFILE * cpfbz2, * dpfbz2, * epfbz2;
@@ -209,3 +210,28 @@ int main(int argc,char * argv[])
 
 	return 0;
 }
+JNIEXPORT void JNICALL Java_rc_loveq_patchupdatedemo_utils_PatchUtils_patch
+  (JNIEnv *env, jclass jclz, jstring old_apk_path, jstring new_apk_path,
+      jstring patch_path){
+    // 1.封装参数
+  	int argc = 4;
+  	char * argv[4];
+  	// 1.1 转换  jstring -> char*
+  	char* old_pak_cstr = (char*)(*env)->GetStringUTFChars(env,old_apk_path,NULL);
+  	char* new_apk_cstr = (char*)(*env)->GetStringUTFChars(env,new_apk_path,NULL);
+  	char* patch_cstr = (char*)(*env)->GetStringUTFChars(env,patch_path,NULL);
+  	// 第0的位置随便给
+  	argv[0] = "combine";
+  	argv[1] = old_pak_cstr;
+  	argv[2] = new_apk_cstr;
+  	argv[3] = patch_cstr;
+
+  	// 2.调用上面的方法  int argc,char * argv[]
+  	patch(argc,argv);
+
+  	// 3.释放资源
+  	(*env)->ReleaseStringUTFChars(env,old_apk_path,old_pak_cstr);
+  	(*env)->ReleaseStringUTFChars(env,new_apk_path,new_apk_cstr);
+  	(*env)->ReleaseStringUTFChars(env,patch_path,patch_cstr);
+
+  }
