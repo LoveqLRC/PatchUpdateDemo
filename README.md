@@ -18,6 +18,7 @@
 2.将生成的.h头文件复制到jni目录下，将bsdiff和bzip里面的的C文件和.h文件复制到jni目录下
 
 3.修改CMakeLists，修改生成的so的名字改为bspatch，修改编译的入口改为bspatch.c
+
 4.这时运行是编译不通过的，需要修改bspatch.c，将#include <bzlib.h>改成#include "bzlib.h"，另外要引入
 	#include "bzlib.c"
 	#include "crctable.c"
@@ -27,7 +28,9 @@
 	#include "blocksort.c"
 	#include "huffman.c"
 以上文件。
+
 5.经过上面几步，运行项目可以正常运行了，另外可以在\app\build\intermediates\cmake\debug\obj目录下，看到生成了对应的libbspatch.so文件。
+
 6.接下来实现patch的native方法，bspatch.c引入#include "rc_loveq_patchupdatedemo_utils_PatchUtils.h"头文件，将main方法改为patch，编写patch的native方法
 
 	JNIEXPORT void JNICALL Java_rc_loveq_patchupdatedemo_utils_PatchUtils_patch
