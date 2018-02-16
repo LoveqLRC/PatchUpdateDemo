@@ -17,5 +17,5 @@
         android:id="@+id/tv_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="version 2.0"/>
+        android:text="version 1.0"/>
 </LinearLayout>
