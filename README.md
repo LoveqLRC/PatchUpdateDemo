@@ -20,6 +20,7 @@
 3.修改CMakeLists，修改生成的so的名字改为bspatch，修改编译的入口改为bspatch.c
 
 4.这时运行是编译不通过的，需要修改bspatch.c，将#include <bzlib.h>改成#include "bzlib.h"，另外要引入
+
 	#include "bzlib.c"
 	#include "crctable.c"
 	#include "compress.c"
