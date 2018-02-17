@@ -62,24 +62,34 @@
 
 7.java层调用patch方法
 
-	public void patch(View view) {
-	        //1.访问后台，是否需要更新版本
-	        //2.需要更新版本，提示下载
-	        //3.下载完成差分之后，调用patch方法合成新的apk
-	        if (!new File(mPatchPath).exists()) {
-	            return;
-	        }
-	        //这是一个耗时操作应该新开一个线程处理
-	        PatchUtils.patch(getPackageResourcePath(), mNewApkPath, mPatchPath);
-	
-	        //4.校验签名
-	        //5.安装最新版本
-	        Intent intent = new Intent(Intent.ACTION_VIEW);
-	        intent.setDataAndType(Uri.fromFile(new File(mNewApkPath)),
-	                "application/vnd.android.package-archive");
-	        startActivity(intent);
-	
-	    }
+	 public void patch(View view) {
+        //1.访问后台，是否需要更新版本
+        //2.需要更新版本，提示下载
+        //3.下载完成差分之后，调用patch方法合成新的apk
+        if (!new File(mPatchPath).exists()) {
+            return;
+        }
+        //这是一个耗时操作应该新开一个线程处理
+        PatchUtils.patch(getPackageResourcePath(), mNewApkPath, mPatchPath);
+
+        //4.校验签名
+        String v1Signature = SignatureUtils.getSignature(this);
+        mTvV1Signature.setText(v1Signature);
+        try {
+            String v2signature = SignatureUtils.getSignature(mNewApkPath);
+            mTvV2Signature.setText(v2signature);
+            boolean isEqual = TextUtils.equals(v1Signature, v2signature);
+            mTvV1V2IsEqual.setText("isEqual :" + isEqual);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //5.安装最新版本
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(new File(mNewApkPath)),
+                "application/vnd.android.package-archive");
+        startActivity(intent);
+
+    }
 
 8.最后服务器生成差分包
 
