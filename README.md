@@ -12,7 +12,7 @@
                                     String patchPath);
 	}
 
-2. rebulid项目，进入项目\app\build\intermediates\classes\debug目录下，执行
+ rebulid项目，进入项目\app\build\intermediates\classes\debug目录下，执行
  `javah (项目名).PatchUtils(例如rc.loveq.patchupdatedemo.utils.PatchUtils)` 此时在app\build\intermediates\classes\debug生成.h头文件
 
 2.将生成的.h头文件复制到jni目录下，将bsdiff和bzip里面的的C文件和.h文件复制到jni目录下
