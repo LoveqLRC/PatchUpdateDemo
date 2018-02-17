@@ -221,7 +221,7 @@ JNIEXPORT void JNICALL Java_rc_loveq_patchupdatedemo_utils_PatchUtils_patch
   	char* new_apk_cstr = (char*)(*env)->GetStringUTFChars(env,new_apk_path,NULL);
   	char* patch_cstr = (char*)(*env)->GetStringUTFChars(env,patch_path,NULL);
   	// 第0的位置随便给
-  	argv[0] = "combine";
+  	argv[0] = "patch";
   	argv[1] = old_pak_cstr;
   	argv[2] = new_apk_cstr;
   	argv[3] = patch_cstr;
